@@ -20,6 +20,8 @@ from django.urls.conf import include
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("blog/", include("blog.urls")),
+    path("blogcategory/", include("blogcategory.urls")),
+    path("blogcomment/", include("blogcomment.urls")),
     path("authentication/", include("authentication.urls")),
     path("api-auth/", include("rest_framework.urls", namespace="rest_framework")),
 ]

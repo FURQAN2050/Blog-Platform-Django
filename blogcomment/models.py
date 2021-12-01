@@ -1,12 +1,14 @@
 from django.db import models
 import blog.models as BlogModels
+from django.contrib.auth.models import User
 
 # Create your models here.
 
 
 class PostComment(models.Model):
-    title = models.CharField(max_length=200, unique=True)
+    title = models.CharField(max_length=200)
     published = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
-    post = models.OneToOneField(BlogModels.Post, on_delete=models.CASCADE)
+    post_id = models.CharField(max_length=200)
     content = models.TextField()
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
