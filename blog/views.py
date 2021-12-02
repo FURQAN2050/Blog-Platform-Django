@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponse
 from rest_framework.views import APIView
 
@@ -31,10 +31,12 @@ class TestModelViewSet(APIView):
 
 class GetAllBlogs(APIView):
     # authentication_classes = [SessionAuthentication, BasicAuthentication]
-    # permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
+
     def get(self, request):
+        print(request.user)
         queryset = Post.objects.all().values()
-        print(queryset)
+        # print(queryset)
         return Response(queryset)
 
 
@@ -63,6 +65,34 @@ class GetBlog(APIView):
     # permission_classes = [IsAuthenticated]
     def post(self, request):
         payload = json.loads(request.body)
-        queryset = Post.objects.filter(id=payload["id"]).values()
-        print(queryset)
-        return Response(queryset)
+        user = payload["user_id"]
+        is_liked = False
+        postObj = get_object_or_404(Post, id=payload["id"])
+        if postObj.likes.filter(id=user).exists():
+            is_liked = True
+        post = Post.objects.filter(id=payload["id"]).values()
+        print(post)
+        return Response({"success": True, "post": post, "is_liked": is_liked})
+        # return Response({is_liked:is_liked})
+
+
+class likeBlog(APIView):
+    # permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        print("appi fit")
+        # print(request.get("post_id"))
+        # print(request.POST.get("post_id"))
+        is_liked = False
+        payload = json.loads(request.body)
+        user = payload["user_id"]
+        print(user)
+        post = get_object_or_404(Post, id=payload["post_id"])
+        if post.likes.filter(id=user).exists():
+            post.likes.remove(user)
+            is_liked = False
+        else:
+            print(post)
+            post.likes.add(user)
+            is_liked = True
+        return Response({"success": True})
