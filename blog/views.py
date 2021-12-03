@@ -31,7 +31,7 @@ class TestModelViewSet(APIView):
 
 class GetAllBlogs(APIView):
     # authentication_classes = [SessionAuthentication, BasicAuthentication]
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
 
     def get(self, request):
         print(request.user)
@@ -96,3 +96,22 @@ class likeBlog(APIView):
             post.likes.add(user)
             is_liked = True
         return Response({"success": True})
+
+
+class getUserProfile(APIView):
+    def post(self, request):
+        payload = json.loads(request.body)
+        user = payload["user_id"]
+        payload = json.loads(request.body)
+        author = User.objects.filter(id=user).values()
+        posts = Post.objects.filter(author=user).values()
+        postsCount = Post.objects.filter(author=user).count()
+
+        return Response(
+            {
+                "success": True,
+                "user": author,
+                "authorPost": posts,
+                "postCount": postsCount,
+            }
+        )

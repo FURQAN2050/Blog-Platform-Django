@@ -9,5 +9,6 @@ urlpatterns = [
     path("api/getBlog/", views.GetBlog.as_view()),
     path("api/createBlog/", views.CreateBlog.as_view()),
     path("api/likeBlog/", views.likeBlog.as_view()),
+    path("api/userProfile/", views.getUserProfile.as_view()),
     path("testModel/", views.TestModelViewSet.as_view()),
 ]
