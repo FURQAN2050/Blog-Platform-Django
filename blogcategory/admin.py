@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Category, PostCategory
+from .models import Category, PostCategory, UserFavouriteCategory
 
 
 class PostCategoryInLine(admin.TabularInline):
@@ -15,3 +15,4 @@ class CategoryAdmin(admin.ModelAdmin):
 # Register your models here.
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(PostCategory)
+admin.site.register(UserFavouriteCategory)

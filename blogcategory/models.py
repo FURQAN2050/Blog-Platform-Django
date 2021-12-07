@@ -17,3 +17,8 @@ class Category(models.Model):
 class PostCategory(models.Model):
     post = models.ManyToManyField(BlogModels.Post)
     category = models.ManyToManyField(Category)
+
+
+class UserFavouriteCategory(models.Model):
+    user_id = models.CharField(max_length=200)
+    category_id = models.CharField(max_length=200)
