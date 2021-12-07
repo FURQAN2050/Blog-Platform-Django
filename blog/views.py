@@ -10,7 +10,7 @@ from rest_framework.permissions import IsAuthenticated
 from django.http import JsonResponse
 from django.core.serializers import serialize
 import json
-from django.contrib.auth.models import User
+from authentication.models import User
 
 # Create your views here.
 

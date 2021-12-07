@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import User
+from authentication.models import User
 
 STATUS = ((0, "Draft"), (1, "Publish"))
 
@@ -14,7 +14,7 @@ class Post(models.Model):
     content = models.TextField()
     created_on = models.DateTimeField(auto_now_add=True)
     status = models.IntegerField(choices=STATUS, default=0)
-    likes=models.ManyToManyField(User, related_name='likes',default=True)
+    likes = models.ManyToManyField(User, related_name="likes", default=True)
 
     def __str__(self):
         return self.title

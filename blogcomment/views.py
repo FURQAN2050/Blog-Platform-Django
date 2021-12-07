@@ -5,7 +5,7 @@ from blogcomment.serializers import PostCommentSerializer
 from .models import PostComment
 from rest_framework.response import Response
 import json
-from django.contrib.auth.models import User
+from authentication.models import User
 
 # Create your views here.
 class CreatePostComment(APIView):
